@@ -55,13 +55,13 @@ body{
    TOPBAR
 ═══════════════════════════════ */
 .topbar{
-  height:52px;
+  height:44px;
   background:var(--surface);
   border-bottom:1px solid var(--border);
   display:flex;
   align-items:center;
-  padding:0 16px;
-  gap:12px;
+  padding:0 10px;
+  gap:8px;
   flex-shrink:0;
   position:relative;
   z-index:30;
@@ -73,38 +73,33 @@ body{
   margin-right:8px;
 }
 .brand-icon{
-  width:32px;height:32px;
+  width:26px;height:26px;
   background:var(--accent);
-  border-radius:6px;
+  border-radius:5px;
   display:flex;align-items:center;justify-content:center;
-  font-size:16px;
+  font-size:13px;
   flex-shrink:0;
-  box-shadow:0 0 12px var(--accent-glow);
+  box-shadow:0 0 10px var(--accent-glow);
 }
-.brand-text{
-  line-height:1.1;
-}
+.brand-text{line-height:1.1;}
 .brand-main{
   font-family:'Rajdhani',sans-serif;
-  font-size:15px;font-weight:700;
-  color:var(--text);
-  letter-spacing:.04em;
+  font-size:13px;font-weight:700;
+  color:var(--text);letter-spacing:.04em;
 }
 .brand-sub{
-  font-size:9px;font-weight:500;
-  color:var(--text3);
-  letter-spacing:.08em;
-  text-transform:uppercase;
+  font-size:8px;font-weight:500;
+  color:var(--text3);letter-spacing:.06em;text-transform:uppercase;
 }
 .topbar-sep{width:1px;height:28px;background:var(--border);flex-shrink:0}
 .topbar-maps{display:flex;gap:4px}
 .maptab{
-  padding:5px 14px;
+  padding:4px 10px;
   border-radius:var(--radius-sm);
   border:1px solid var(--border);
   background:transparent;
   color:var(--text2);
-  font-size:11px;font-weight:600;
+  font-size:10px;font-weight:600;
   cursor:pointer;
   transition:all .15s;
   font-family:'Inter',sans-serif;
@@ -124,18 +119,19 @@ body{
 .topbar-spacer{flex:1}
 .topbar-actions{display:flex;gap:6px}
 .tbtn{
-  display:flex;align-items:center;gap:5px;
-  padding:6px 12px;
+  display:flex;align-items:center;gap:4px;
+  padding:4px 9px;
   border-radius:var(--radius-sm);
   border:1px solid var(--border);
   background:var(--surface2);
   color:var(--text2);
-  font-size:11px;font-weight:600;
+  font-size:10px;font-weight:600;
   cursor:pointer;
   transition:all .15s;
   font-family:'Inter',sans-serif;
   white-space:nowrap;
 }
+.tbtn-icon{font-size:11px}
 .tbtn:hover{color:var(--text);border-color:var(--border2)}
 .tbtn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
 .tbtn.green{border-color:var(--green);color:var(--green);background:var(--green-dim)}
@@ -155,7 +151,7 @@ body{
    LEFT SIDEBAR
 ═══════════════════════════════ */
 .sidebar{
-  width:210px;
+  width:185px;
   background:var(--surface);
   border-right:1px solid var(--border);
   display:flex;
@@ -164,7 +160,7 @@ body{
   flex-shrink:0;
 }
 .sb-section{
-  padding:12px;
+  padding:8px 10px;
   border-bottom:1px solid var(--border);
 }
 .sb-label{
@@ -188,22 +184,22 @@ body{
 .tool-grid{
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
-  gap:4px;
+  gap:3px;
 }
 .tool-btn{
-  padding:7px 4px;
+  padding:5px 3px;
   border-radius:var(--radius-sm);
   border:1px solid var(--border);
   background:var(--surface2);
   color:var(--text3);
-  font-size:9px;font-weight:600;
+  font-size:8px;font-weight:600;
   cursor:pointer;
   transition:all .12s;
   text-align:center;
-  display:flex;flex-direction:column;align-items:center;gap:3px;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
   font-family:'Inter',sans-serif;
 }
-.tool-btn .ti{font-size:15px}
+.tool-btn .ti{font-size:13px}
 .tool-btn:hover{color:var(--text);border-color:var(--border2);background:var(--panel)}
 .tool-btn.active{
   background:var(--accent-dim);
@@ -466,7 +462,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:3p
    RIGHT PANEL
 ═══════════════════════════════ */
 .right-panel{
-  width:220px;
+  width:195px;
   background:var(--surface);
   border-left:1px solid var(--border);
   display:flex;flex-direction:column;
@@ -495,7 +491,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:3p
 .rp-body{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .rp-panel{display:none;flex-direction:column;flex:1;overflow-y:auto}
 .rp-panel.active{display:flex;flex-direction:column}
-.rp-sec{padding:12px;border-bottom:1px solid var(--border)}
+.rp-sec{padding:8px 10px;border-bottom:1px solid var(--border)}
 
 /* TEXT INPUTS */
 .rp-inp{
@@ -830,11 +826,13 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer;height:3p
     <div class="canvas-ph-sub">Haz click aquí o usa el panel izquierdo</div>
   </div>
   <div class="zoom-ctrl">
-    <button class="z-btn" onclick="zoomIn()">+</button>
+    <button class="z-btn" onclick="zoomIn()" title="Zoom +">+</button>
     <div class="z-pct" id="zpct">100%</div>
-    <button class="z-btn" onclick="zoomOut()">−</button>
-    <button class="z-btn" style="font-size:10px" onclick="zoomReset()">⌂</button>
+    <button class="z-btn" onclick="zoomOut()" title="Zoom −">−</button>
+    <button class="z-btn" style="font-size:10px" onclick="zoomReset()" title="Reset zoom">⌂</button>
+    <button class="z-btn" style="font-size:10px" onclick="centerMap()" title="Centrar mapa">⊕</button>
   </div>
+  <div style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-size:9px;color:rgba(255,255,255,.25);pointer-events:none;white-space:nowrap">Click derecho + arrastrar para mover · Ctrl+Scroll para zoom</div>
   <div id="eraser-ring"></div>
   <div id="ruler-tip"></div>
 </div>
@@ -1063,9 +1061,17 @@ area.addEventListener('wheel',e=>{
   redraw();
 },{passive:false});
 
+// Space key for pan mode
+let spaceDown=false;
+document.addEventListener('keydown',ev=>{if(ev.code==='Space'&&!['INPUT','TEXTAREA'].includes(ev.target.tagName)){spaceDown=true;canvas.style.cursor='grab';ev.preventDefault();}});
+document.addEventListener('keyup',ev=>{if(ev.code==='Space'){spaceDown=false;canvas.style.cursor=tool==='eraser'?'none':tool==='select'?'move':tool==='ruler'?'cell':tool==='utility'?'copy':'crosshair';}});
+
 canvas.addEventListener('mousedown',e=>{
-  if(e.button===2){e.preventDefault();return;}
-  if(e.button===1){isPanning=true;panLast=evPos(e);e.preventDefault();return;}
+  // Right-click drag OR middle-click OR space+leftclick = pan
+  if(e.button===2||e.button===1||(e.button===0&&spaceDown)){
+    isPanning=true;panLast=evPos(e);e.preventDefault();
+    canvas.style.cursor='grabbing';return;
+  }
   onDown(e);
 });
 window.addEventListener('mousemove',e=>{
@@ -1079,7 +1085,11 @@ window.addEventListener('mousemove',e=>{
   onMove(e);
 });
 window.addEventListener('mouseup',e=>{
-  if(isPanning&&e.button===1){isPanning=false;return;}
+  if(isPanning){
+    isPanning=false;
+    canvas.style.cursor=spaceDown?'grab':(tool==='eraser'?'none':tool==='select'?'move':tool==='ruler'?'cell':tool==='utility'?'copy':'crosshair');
+    return;
+  }
   onUp(e);
 });
 canvas.addEventListener('mouseleave',e=>{
@@ -1087,14 +1097,23 @@ canvas.addEventListener('mouseleave',e=>{
   hideEraser();
   document.getElementById('ruler-tip').style.display='none';
 });
+canvas.addEventListener('contextmenu',e=>e.preventDefault());
 canvas.addEventListener('touchstart',e=>{e.preventDefault();onDown(e);},{passive:false});
 canvas.addEventListener('touchmove',e=>{e.preventDefault();onMove(e);},{passive:false});
 canvas.addEventListener('touchend',onUp);
-canvas.addEventListener('contextmenu',e=>e.preventDefault());
 
 function zoomIn(){const c={x:canvas.width/2,y:canvas.height/2};const nz=Math.min(5,zoom*1.2);panX=c.x-(c.x-panX)*(nz/zoom);panY=c.y-(c.y-panY)*(nz/zoom);zoom=nz;document.getElementById('zpct').textContent=Math.round(zoom*100)+'%';redraw();}
 function zoomOut(){const c={x:canvas.width/2,y:canvas.height/2};const nz=Math.max(0.15,zoom/1.2);panX=c.x-(c.x-panX)*(nz/zoom);panY=c.y-(c.y-panY)*(nz/zoom);zoom=nz;document.getElementById('zpct').textContent=Math.round(zoom*100)+'%';redraw();}
 function zoomReset(){zoom=1;panX=0;panY=0;document.getElementById('zpct').textContent='100%';redraw();}
+function centerMap(){
+  if(!maps[mapIdx].iw){return;}
+  zoom=1;
+  panX=Math.round((canvas.width-maps[mapIdx].iw)/2);
+  panY=Math.round((canvas.height-maps[mapIdx].ih)/2);
+  document.getElementById('zpct').textContent='100%';
+  redraw();
+  showToast('⊕ Mapa centrado');
+}
 
 // ══════════════════════════════════════
 // POINTER EVENTS
@@ -1377,14 +1396,17 @@ function loadMap(ev){
   reader.onload=e=>{
     const img=new Image();
     img.onload=()=>{
-      const W=area.clientWidth,H=area.clientHeight;
+      const W=canvas.width,H=canvas.height;
       const sc=Math.min(W/img.naturalWidth,H/img.naturalHeight,1);
       maps[mapIdx].image=e.target.result;
       maps[mapIdx].iw=img.naturalWidth*sc;
       maps[mapIdx].ih=img.naturalHeight*sc;
       maps[mapIdx].name=f.name.replace(/\.[^.]+$/,'');
       mapImages[mapIdx]=img;
-      panX=(W-maps[mapIdx].iw)/2;panY=(H-maps[mapIdx].ih)/2;zoom=1;
+      // Center perfectly
+      panX=Math.round((W-maps[mapIdx].iw)/2);
+      panY=Math.round((H-maps[mapIdx].ih)/2);
+      zoom=1;
       document.getElementById('zpct').textContent='100%';
       document.getElementById('mn'+mapIdx).textContent=maps[mapIdx].name;
       document.getElementById('canvas-ph').style.display='none';
@@ -1635,6 +1657,8 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 // ══════════════════════════════════════
 document.addEventListener('keydown',e=>{
   if(['INPUT','TEXTAREA'].includes(e.target.tagName))return;
+  // Space handled above for pan
+  if(e.code==='Space'){e.preventDefault();return;}
   const m={p:'pen',a:'arrow',c:'circle',r:'ruler',t:'text',s:'select',e:'eraser',u:'utility'};
   if(m[e.key])setTool(m[e.key]);
   if((e.ctrlKey||e.metaKey)&&e.key==='z'){e.preventDefault();doUndo();}
@@ -1644,6 +1668,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='='||e.key==='+')zoomIn();
   if(e.key==='-')zoomOut();
   if(e.key==='0')zoomReset();
+  if(e.key==='c'&&!e.ctrlKey)setTool('circle');
 });
 
 // ══════════════════════════════════════
