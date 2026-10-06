@@ -341,15 +341,22 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer;height:3px}
   <div class="chint">Click derecho + arrastrar para mover · Ctrl+Scroll para zoom</div>
   <div id="er"></div>
   <div id="rt"></div>
-  <!-- SEQUENCE OVERLAY -->
-  <div id="seq-overlay" style="display:none;position:absolute;inset:0;background:rgba(5,6,8,.85);z-index:20;display:none;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;gap:12px">
-    <div id="seq-step-label" style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--gold);letter-spacing:.06em;text-shadow:0 0 20px var(--gg)">PASO 1</div>
-    <div style="display:flex;gap:8px">
-      <button onclick="seqPrev()" style="padding:7px 18px;border-radius:3px;border:1px solid var(--b2);background:var(--s2);color:var(--t2);font-size:11px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">◀ Anterior</button>
-      <button onclick="seqStop()" style="padding:7px 18px;border-radius:3px;border:1px solid var(--red);background:rgba(232,51,58,.15);color:var(--red);font-size:11px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">✕ Salir</button>
-      <button onclick="seqNext()" style="padding:7px 18px;border-radius:3px;border:1px solid var(--gold);background:var(--gd);color:var(--gold);font-size:11px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">Siguiente ▶</button>
+  <!-- SEQUENCE CONTROL BAR — no dark overlay, just a slim bar at bottom -->
+  <div id="seq-overlay" style="display:none;position:absolute;bottom:0;left:0;right:0;z-index:20;pointer-events:auto">
+    <!-- top accent line -->
+    <div style="height:2px;background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--gold2) 50%,var(--gold) 70%,transparent);box-shadow:0 0 12px var(--gg)"></div>
+    <div style="background:rgba(5,6,8,0.88);backdrop-filter:blur(10px);padding:8px 16px;display:flex;align-items:center;gap:12px">
+      <!-- Step label -->
+      <div id="seq-step-label" style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:.06em;text-shadow:0 0 12px var(--gg);white-space:nowrap;min-width:90px">PASO 1 / 1</div>
+      <!-- Dots progress -->
+      <div id="seq-dots" style="display:flex;gap:4px;flex:1"></div>
+      <!-- Controls -->
+      <div style="display:flex;gap:5px;flex-shrink:0">
+        <button onclick="seqPrev()" style="padding:5px 14px;border-radius:3px;border:1px solid var(--b2);background:var(--s2);color:var(--t2);font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;transition:all .12s" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--b2)';this.style.color='var(--t2)'">◀ Anterior</button>
+        <button onclick="seqNext()" style="padding:5px 14px;border-radius:3px;border:1px solid var(--gold);background:var(--gd);color:var(--gold);font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">Siguiente ▶</button>
+        <button onclick="seqStop()" style="padding:5px 12px;border-radius:3px;border:1px solid var(--red);background:rgba(232,51,58,.12);color:var(--red);font-size:10px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">✕ Salir</button>
+      </div>
     </div>
-    <div id="seq-dots" style="display:flex;gap:5px"></div>
   </div>
 </div>
 
