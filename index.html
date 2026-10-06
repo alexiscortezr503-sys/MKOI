@@ -775,8 +775,114 @@ document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA'].includes(e.targe
 if(e.key==='ArrowRight'&&seqActive)seqNext();
 if(e.key==='ArrowLeft'&&seqActive)seqPrev();if(e.key==='Delete'&&selId){pushUndo();maps[mapIdx].items=maps[mapIdx].items.filter(i=>i.id!==selId);selId=null;redraw();updItems();}if(e.key==='g')togGrid();if(e.key==='='||e.key==='+')zoomIn();if(e.key==='-')zoomOut();if(e.key==='0')zoomReset();});
 
-buildPal();renderPhases();renderElems();renderPlayers();renderPm();renderSeqList();setTool('pen');selMap(0);
-if(phases.length)selPhase(phases[0].id);if(elements.length)elemId=elements[0].id;
+// ── PERSISTENCIA LOCAL ──
+const SAVE_KEY = 'mkoi_sb_v1';
+
+function saveAll(){
+  try{
+    // Strip image data from maps to avoid quota — save only drawings, items, strats
+    const mapsData = maps.map((m,i)=>({
+      name: m.name,
+      iw: m.iw, ih: m.ih,
+      // Save image as reference flag only (too big for localStorage)
+      hasImage: !!m.image,
+      drawings: m.drawings,
+      items: m.items,
+      strats: m.strats,
+    }));
+    const data = {
+      maps: mapsData,
+      phases, elements, players,
+      pmReports, seqSteps,
+      pxPerMeter,
+      ts: Date.now()
+    };
+    localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+  } catch(e){
+    // quota exceeded — silently ignore
+    console.warn('localStorage save failed:', e);
+  }
+}
+
+function loadAll(){
+  try{
+    const raw = localStorage.getItem(SAVE_KEY);
+    if(!raw) return false;
+    const data = JSON.parse(raw);
+    if(!data) return false;
+
+    // Restore maps (drawings, items, strats — not images, those are files)
+    if(data.maps){
+      data.maps.forEach((m,i)=>{
+        if(!maps[i]) return;
+        maps[i].name = m.name || '—';
+        maps[i].iw   = m.iw   || 0;
+        maps[i].ih   = m.ih   || 0;
+        maps[i].drawings = m.drawings || [];
+        maps[i].items    = m.items    || [];
+        maps[i].strats   = m.strats   || [];
+        // Update tab name
+        if(m.name) document.getElementById('mn'+i).textContent = m.name;
+      });
+    }
+    if(data.phases && data.phases.length)  phases    = data.phases;
+    if(data.elements && data.elements.length) elements = data.elements;
+    if(data.players && data.players.length)   players  = data.players;
+    if(data.pmReports) pmReports = data.pmReports;
+    if(data.seqSteps)  seqSteps  = data.seqSteps;
+    if(data.pxPerMeter){ pxPerMeter = data.pxPerMeter; const inp=document.getElementById('scale-inp'); if(inp) inp.value=pxPerMeter; }
+    return true;
+  } catch(e){
+    console.warn('localStorage load failed:', e);
+    return false;
+  }
+}
+
+// Auto-save: after any meaningful action hook save into existing functions
+const _origSaveStrat = saveStrat;
+window.saveStrat = function(){ _origSaveStrat(); saveAll(); };
+const _origDelStrat = delStrat;
+window.delStrat = function(mi,id){ _origDelStrat(mi,id); saveAll(); };
+const _origSavePm = savePm;
+window.savePm = function(){ _origSavePm(); saveAll(); };
+const _origDelPm = delPm;
+window.delPm = function(id){ _origDelPm(id); saveAll(); };
+const _origSeqRecord = seqRecord;
+window.seqRecord = function(){ _origSeqRecord(); saveAll(); };
+const _origSeqClear = seqClear;
+window.seqClear = function(){ _origSeqClear(); saveAll(); };
+
+// Auto-save on draw/item changes — debounced
+let _saveTimer=null;
+function scheduleSave(){clearTimeout(_saveTimer);_saveTimer=setTimeout(saveAll,1200);}
+const _origPushUndo = pushUndo;
+window.pushUndo = function(){ _origPushUndo(); scheduleSave(); };
+const _origAddPhase = addPhase;
+window.addPhase = function(){ _origAddPhase(); saveAll(); };
+const _origDelPhase = delPhase;
+window.delPhase = function(id){ _origDelPhase(id); saveAll(); };
+const _origAddElem = addElem;
+window.addElem = function(){ _origAddElem(); saveAll(); };
+const _origDelEl = delEl;
+window.delEl = function(id){ _origDelEl(id); saveAll(); };
+const _origAddPlayer = addPlayer;
+window.addPlayer = function(){ _origAddPlayer(); saveAll(); };
+const _origDelPlayer = delPlayer;
+window.delPlayer = function(id){ _origDelPlayer(id); saveAll(); };
+const _origDoClear = doClear;
+window.doClear = function(){ _origDoClear(); saveAll(); };
+
+// Save on page unload too
+window.addEventListener('beforeunload', saveAll);
+
+// ── INIT ──
+buildPal();
+const loaded = loadAll();
+renderPhases();renderElems();renderPlayers();renderPm();renderSeqList();
+setTool('pen');selMap(0);
+if(phases.length)selPhase(phases[0].id);
+if(elements.length)elemId=elements[0].id;
+if(loaded) showToast('\u{1F4BE} Datos restaurados');
 </script>
 </body>
 </html>
